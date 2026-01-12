@@ -1,0 +1,46 @@
+{
+  "author": "mail@-vladi.ru",
+  "devDependencies": {
+    "@vk/types": "workspace:*"
+  },
+  "dependencies": {
+    "@vk/errors": "workspace:*",
+    "@vk/logger": "workspace:*",
+    "axios": "^1.13.2",
+    "envalid": "^8.1.1",
+    "pino": "^10.1.0",
+    "winston": "3.19.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "test": "./src/index.ts",
+      "development": "./src/index.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "test": "./src/*.ts",
+      "development": "./src/*.ts",
+      "import": "./dist/*.js",
+      "default": "./dist/*.js"
+    }
+  },
+  "imports": {
+    "#*": {
+      "development": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "name": "@vk/utils",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "type": "module",
+  "version": "1.0.0",
+  "files": [
+    "dist"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "composite": true,
+    "declaration": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "#*": [
+        "*.ts"
+      ],
+      "@vk/logger": [
+        "../../logger/src/index.ts"
+      ],
+      "@vk/utils": [
+        "../../utils/src/index.ts"
+      ],
+      "@vk/utils/*": [
+        "../../utils/src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../utils"
+    },
+    {
+      "path": "../logger"
+    }
+  ]
+}

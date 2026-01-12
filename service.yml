@@ -1,0 +1,13 @@
+# service.yml for 'hhhelp'
+use-template: x-node-service
+environment:
+  SERVICE_PORT: 9000
+build:
+  context: ..
+  dockerfile: services/hhhelp/Dockerfile
+labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.hhhelp.rule=Host(`hh.${DOMAIN:-localhost}`)"
+  - "traefik.http.routers.hhhelp.entrypoints=websecure"
+  - "traefik.http.routers.hhhelp.tls.certresolver=myresolver"
+  - "traefik.http.services.hhhelp.loadbalancer.server.port=9000"

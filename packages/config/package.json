@@ -1,0 +1,39 @@
+{
+  "name": "@vk/config",
+  "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "private": true,
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "test": "./src/index.ts",
+      "development": "./src/index.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "imports": {
+    "#*": {
+      "development": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "dependencies": {
+    "@vk/logger": "workspace:*",
+    "@vk/utils": "workspace:*",
+    "dotenv": "^17.2.3",
+    "node-vault": "^0.10.9",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/node-vault": "^0.9.13"
+  }
+}

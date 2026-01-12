@@ -121,6 +121,16 @@ export class TelegramService {
         await this.statusMessageHelper.updateStatusMessage()
     }
 
+    async sendVacanciesBatch(vacancies: HhVacancy[]): Promise<void> {
+        if (vacancies.length === 0) return
+
+        for (const vacancy of vacancies) {
+            this.stateManager.addVacancy(vacancy)
+        }
+
+        await this.statusMessageHelper.updateStatusMessage()
+    }
+
     async sendAlert(message: string): Promise<void> {
         try {
             await this.bot.api.sendMessage(config.TELEGRAM_CHAT_ID_HH, message, { parse_mode: 'HTML' })

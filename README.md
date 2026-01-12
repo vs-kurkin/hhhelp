@@ -9,13 +9,55 @@ Telegram bot and helper service for HeadHunter (hh.ru) automation and assistance
 - **Monitoring**: Health checks and metrics.
 - **Vault Integration**: Secure configuration management.
 
-## Project Structure
+└───src\
+    ├───config.ts
+    ├───index.ts
+    ├───api\
+    │   └───server.ts
+    ├───bot\
+    │   ├───StateManager.ts
+    │   ├───types.ts
+    │   ├───handlers\
+    │   │   ├───ApplicationHandlers.ts
+    │   │   ├───SystemHandlers.ts
+    │   │   └───VacancyHandlers.ts
+    │   ├───keyboards\
+    │   ├───middlewares\
+    │   │   ├───AuthMiddleware.ts
+    │   │   └───UserSaverMiddleware.ts
+    │   └───utils\
+    │       ├───ErrorHandler.ts
+    │       └───StatusMessageHelper.ts
+    ├───db\
+    │   ├───connection.ts
+    │   ├───index.ts
+    │   ├───redis.ts
+    │   └───models\
+    │       ├───User.ts
+    │       └───Vacancy.ts
+    ├───middleware\
+    │   ├───index.ts
+    │   ├───metricsMiddleware.ts
+    │   └───telegramAuth.ts
+    ├───services\
+    │   ├───AnalysisService.ts
+    │   ├───DocumentService.ts
+    │   ├───GeminiService.ts
+    │   ├───HhAuthService.ts
+    │   ├───HhService.ts
+    │   ├───StorageService.ts
+    │   ├───TelegramService.ts
+    │   ├───VacancyClassifier.ts
+    │   └───monitor\
+    │       ├───AlertService.ts
+    │       ├───LogBufferTransport.ts
+    │       └───MetricsService.ts
+    ├───templates\
+    │   └───TelegramTemplates.ts
+    └───utils\
+        └───vault.ts
 
-- `src/`: Main application source code.
-- `packages/`: Shared internal packages (`@vk-public/*`).
-- `data/`: Local data storage.
-
-## Setup
+## 🚀 Getting Started
 
 1.  **Clone the repository:**
     ```bash

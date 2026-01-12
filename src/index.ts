@@ -53,54 +53,60 @@ async function start() {
             await alertService.check()
 
             const vacancies = await hhService.getVacancies()
-            let newVacanciesCount = 0
-            let skippedCount = 0
+            if (vacancies.length === 0) {
+                logger.info('No vacancies fetched from HH.')
 
-            for (const vacancy of vacancies) {
-                const isProcessed = await storageService.isProcessed(vacancy.id)
-
-                if (!isProcessed) {
-                    newVacanciesCount++
-                    await telegramService.sendVacancy(vacancy)
-                    await storageService.addProcessed(vacancy.id)
-
-                    // Save to MongoDB
-                    try {
-                        await VacancyModel.updateOne(
-                            { hhId: vacancy.id },
-                            {
-                                hhId: vacancy.id,
-                                name: vacancy.name,
-                                employer: vacancy.employer.name,
-                                salary: vacancy.salary ? {
-                                    from: vacancy.salary.from,
-                                    to: vacancy.salary.to,
-                                    currency: vacancy.salary.currency,
-                                } : undefined,
-                                alternateUrl: vacancy.alternate_url,
-                                stack: telegramService.classifyVacancy(vacancy), // Reusing public method or logic
-                                raw: vacancy,
-                            },
-                            { upsert: true },
-                        )
-                    } catch (databaseError) {
-                        logger.error('Failed to save vacancy to DB', {
-                            error: databaseError, id: vacancy.id,
-                        })
-                    }
-
-                    // Add small delay to avoid hitting TG rate limits
-                    await new Promise(resolve => setTimeout(resolve, 1000))
-                } else {
-                    skippedCount++
-                }
+                return
             }
 
-            if (skippedCount === vacancies.length && vacancies.length > 0) {
-                logger.info(`All ${ vacancies.length } vacancies were already processed. To re-process, clear Redis keys 'vacancy:processed:*'.`)
+            // Batch filter
+            const vacancyIds = vacancies.map(v => v.id)
+            const newVacancyIds = await storageService.filterNewVacancies(vacancyIds)
+            const newVacancies = vacancies.filter(v => newVacancyIds.includes(v.id))
+
+            if (newVacancies.length === 0) {
+                logger.info(`All ${ vacancies.length } vacancies were already processed.`)
+
+                return
             }
 
-            logger.info(`Check cycle completed. Found ${ newVacanciesCount } new vacancies out of ${ vacancies.length }.`)
+            // 1. Send to Telegram (Batch) - Update in-memory state and UI
+            await telegramService.sendVacanciesBatch(newVacancies)
+
+            // 2. Mark as processed in Redis (Batch)
+            await storageService.markAsProcessed(newVacancyIds)
+
+            // 3. Save to MongoDB (Batch)
+            try {
+                const bulkOps = newVacancies.map(vacancy => ({
+                    updateOne: {
+                        filter: { hhId: vacancy.id },
+                        update: {
+                            hhId: vacancy.id,
+                            name: vacancy.name,
+                            employer: vacancy.employer.name,
+                            salary: vacancy.salary ? {
+                                from: vacancy.salary.from,
+                                to: vacancy.salary.to,
+                                currency: vacancy.salary.currency,
+                            } : undefined,
+                            alternateUrl: vacancy.alternate_url,
+                            stack: telegramService.classifyVacancy(vacancy),
+                            raw: vacancy,
+                        },
+                        upsert: true,
+                    },
+                }))
+
+                await VacancyModel.bulkWrite(bulkOps)
+                logger.info(`Saved ${ newVacancies.length } vacancies to MongoDB`)
+            } catch (databaseError) {
+                logger.error('Failed to save vacancies to DB', {
+                    error: databaseError, count: newVacancies.length,
+                })
+            }
+
+            logger.info(`Check cycle completed. Found ${ newVacancies.length } new vacancies out of ${ vacancies.length }.`)
         } catch (error) {
             logger.error('Error in check cycle', { error })
         }

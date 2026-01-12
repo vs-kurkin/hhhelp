@@ -1,30 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { makeLogger } from '@vk-public/logger'
 import axios from 'axios'
+import { z } from 'zod'
 
 import { MetricsService } from './monitor/MetricsService.js'
+import { HhResponseSchema, HhVacancy } from './schemas/HhSchemas.js'
 
 import { config } from '#config'
 
 const logger = makeLogger('hh-service')
 
-export interface HhVacancy {
-    id: string;
-    name: string;
-    salary: {
-        from: number | null;
-        to: number | null;
-        currency: string;
-    } | null;
-    employer: {
-        name: string;
-    };
-    alternate_url: string;
-    snippet: {
-        requirement: string;
-        responsibility: string;
-    };
-}
+export { HhVacancy }
 
 export class HhService {
     constructor(private metrics?: MetricsService) {}
@@ -44,7 +30,21 @@ export class HhService {
                 headers: { 'User-Agent': 'HH-Vacancy-Monitor/1.0 (admin@b-vladi.ru)' },
             })
 
-            const items = response.data.items as HhVacancy[]
+            const parsed = HhResponseSchema.safeParse(response.data)
+
+            if (!parsed.success) {
+                logger.error('Invalid HH API response structure', {
+                    errors: parsed.error.format(),
+                })
+
+                if (this.metrics) {
+                    this.metrics.hhApiErrors.inc()
+                }
+
+                return []
+            }
+
+            const items = parsed.data.items
 
             logger.info(`Fetched ${ items.length } vacancies`)
 

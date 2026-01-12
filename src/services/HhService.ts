@@ -14,7 +14,7 @@ export { HhVacancy }
 
 export class HhService {
     private readonly BASE_URL = 'https://api.hh.ru/vacancies'
-    private readonly USER_AGENT = 'HHHelp/1.0 (admin@b-vladi.ru)'
+    private readonly USER_AGENT = `HHHelp/1.0 (${ config.HH_CONTACT_EMAIL })`
 
     constructor(private readonly metrics?: MetricsService) {}
 
@@ -32,7 +32,11 @@ export class HhService {
 
             return vacancies
         } catch (error) {
-            this.recordError('Failed to fetch or process vacancies', error)
+            const message = error instanceof Error && error.message === 'Validation Error'
+                ? 'HH API schema validation failed'
+                : 'Failed to fetch vacancies'
+
+            this.recordError(message, error)
 
             return []
         }
@@ -49,6 +53,7 @@ export class HhService {
                 per_page: 100,
             },
             headers: { 'User-Agent': this.USER_AGENT },
+            timeout: config.HH_API_TIMEOUT,
         })
 
         return response.data
@@ -58,10 +63,8 @@ export class HhService {
         const parsed = HhResponseSchema.safeParse(data)
 
         if (!parsed.success) {
-            const validationErrors = parsed.error.format()
-
-            this.recordError('HH API schema validation failed', validationErrors)
-            throw new Error('Validation Error')
+            // Throw error without recording it here to avoid double-reporting in metrics/logs
+            throw new Error('Validation Error', { cause: parsed.error.format() })
         }
 
         return parsed.data.items

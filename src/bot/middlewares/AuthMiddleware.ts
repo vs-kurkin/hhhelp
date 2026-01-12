@@ -1,7 +1,7 @@
 import { config } from '#config'
 import { UserModel } from '#db'
 import { makeLogger } from '@vk-public/logger'
-import { MyContext } from '../types.js'
+import { MyContext } from '#bot/types'
 import { NextFunction } from 'grammy'
 
 const logger = makeLogger('auth-middleware')

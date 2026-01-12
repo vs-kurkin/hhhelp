@@ -1,5 +1,5 @@
-import { LogBufferTransport } from './LogBufferTransport.js'
-import { MetricsService } from './MetricsService.js'
+import { LogBufferTransport } from '#services/monitor/LogBufferTransport'
+import { MetricsService } from '#services/monitor/MetricsService'
 
 import { TelegramTemplates } from '#templates/TelegramTemplates'
 

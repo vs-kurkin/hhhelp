@@ -4,7 +4,7 @@ import { makeLogger } from '@vk-public/logger'
 import dotenv from 'dotenv'
 import { cleanEnv, num, str } from 'envalid'
 
-import { loadSecrets } from './utils/vault.js'
+import { loadSecrets } from '#utils/vault'
 
 // Load .env from project root for local dev
 dotenv.config({ path: path.resolve(process.cwd(), '.env') })

@@ -1,4 +1,4 @@
-import { MyContext } from '../types.js'
+import { MyContext } from '#bot/types'
 import { config } from '#config'
 import { makeLogger } from '@vk-public/logger'
 

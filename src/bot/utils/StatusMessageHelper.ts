@@ -1,7 +1,7 @@
 import { Api, RawApi, InlineKeyboard } from 'grammy'
 import { config } from '#config'
 import { TelegramTemplates } from '#templates/TelegramTemplates'
-import { StateManager } from '../StateManager.js'
+import { StateManager } from '#bot/StateManager'
 import { VacancyClassifier } from '#services/VacancyClassifier'
 import { makeLogger } from '@vk-public/logger'
 

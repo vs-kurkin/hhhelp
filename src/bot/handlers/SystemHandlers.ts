@@ -1,4 +1,4 @@
-import { MyContext } from '../types.js'
+import { MyContext } from '#bot/types'
 import { MetricsService } from '#services/monitor/MetricsService'
 import { LogBufferTransport } from '#services/monitor/LogBufferTransport'
 import { TelegramTemplates } from '#templates/TelegramTemplates'

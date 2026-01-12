@@ -18,7 +18,7 @@ export class VacancyClassifier {
     }
 
     public classify(vacancy: HhVacancy): string {
-        const text = (vacancy.name + ' ' + (vacancy.snippet.requirement || '')).toLowerCase()
+        const text = (vacancy.name + ' ' + (vacancy.snippet?.requirement || '')).toLowerCase()
 
         // 1. Check custom/merged filters
         for (const [category, keywords] of Object.entries(this.filters)) {

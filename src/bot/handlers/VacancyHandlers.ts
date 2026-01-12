@@ -1,6 +1,6 @@
-import { MyContext } from '../types.js'
-import { StateManager } from '../StateManager.js'
-import { StatusMessageHelper } from '../utils/StatusMessageHelper.js'
+import { MyContext } from '#bot/types'
+import { StateManager } from '#bot/StateManager'
+import { StatusMessageHelper } from '#bot/utils/StatusMessageHelper'
 import { VacancyClassifier } from '#services/VacancyClassifier'
 import { AnalysisService } from '#services/AnalysisService'
 import { TelegramTemplates } from '#templates/TelegramTemplates'
@@ -123,8 +123,8 @@ export class VacancyHandlers {
 
     private formatVacancyMessage(vacancy: HhVacancy): string {
         const salary = vacancy.salary ? `${ vacancy.salary.from ?? '?' } - ${ vacancy.salary.to ?? '?' } ${ vacancy.salary.currency }` : 'Зарплата не указана'
-        const responsibility = this.cleanText(vacancy.snippet.responsibility ?? '')
-        const requirement = this.cleanText(vacancy.snippet.requirement ?? '')
+        const responsibility = this.cleanText(vacancy.snippet?.responsibility ?? '')
+        const requirement = this.cleanText(vacancy.snippet?.requirement ?? '')
         const analysis = this.analyzer.analyze(vacancy)
         const analysisText = analysis.reasons.length > 0 ? `\n📊 <b>Почему подходит:</b>\n${ analysis.reasons.join('\n') }` : ''
 

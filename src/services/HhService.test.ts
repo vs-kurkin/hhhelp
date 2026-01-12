@@ -1,14 +1,25 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import axios from 'axios'
-import { HhService } from './HhService'
-import { MetricsService } from './monitor/MetricsService'
+import { HhService } from '#services/HhService'
+import { MetricsService } from '#services/monitor/MetricsService'
 
 vi.mock('axios')
 vi.mock('@vk-public/logger', () => ({
     makeLogger: () => ({
         info: vi.fn(),
+        warn: vi.fn(),
         error: vi.fn(),
     }),
+}))
+
+vi.mock('#config', () => ({
+    config: {
+        HH_SEARCH_TEXT: 'test',
+        HH_MIN_SALARY: 100,
+        HH_AREA: 1,
+        HH_CONTACT_EMAIL: 'test@example.com',
+        HH_API_TIMEOUT: 5000,
+    }
 }))
 
 describe('HhService', () => {

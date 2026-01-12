@@ -23,7 +23,7 @@ export class AnalysisService {
     }
 
     analyze(vacancy: HhVacancy): AnalysisResult {
-        const text = `${ vacancy.name } ${ vacancy.snippet.requirement } ${ vacancy.snippet.responsibility }`.toLowerCase()
+        const text = `${ vacancy.name } ${ vacancy.snippet?.requirement ?? '' } ${ vacancy.snippet?.responsibility ?? '' }`.toLowerCase()
 
         const roles = this.findMatches(text, this.rules.roles)
         const stack = this.findMatches(text, this.rules.stack)

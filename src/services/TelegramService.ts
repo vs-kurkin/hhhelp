@@ -1,8 +1,8 @@
 import { makeLogger } from '@vk-public/logger'
 import { Bot, MemorySessionStorage, session } from 'grammy'
 
-import { LogBufferTransport } from './monitor/LogBufferTransport.js'
-import { MetricsService } from './monitor/MetricsService.js'
+import { LogBufferTransport } from '#services/monitor/LogBufferTransport'
+import { MetricsService } from '#services/monitor/MetricsService'
 
 import { config } from '#config'
 import { VacancyModel } from '#db'
@@ -12,18 +12,18 @@ import { HhVacancy } from '#services/HhService'
 import { TelegramTemplates } from '#templates/TelegramTemplates'
 
 // New modular imports
-import { MyContext, SessionData, ApiError } from '../bot/types.js'
-import { StateManager } from '../bot/StateManager.js'
+import { MyContext, SessionData, ApiError } from '#bot/types'
+import { StateManager } from '#bot/StateManager'
 import { VacancyClassifier } from '#services/VacancyClassifier'
 import { DocumentService } from '#services/DocumentService'
-import { StatusMessageHelper } from '../bot/utils/StatusMessageHelper.js'
-import { authMiddleware } from '../bot/middlewares/AuthMiddleware.js'
-import { userSaverMiddleware } from '../bot/middlewares/UserSaverMiddleware.js'
+import { StatusMessageHelper } from '#bot/utils/StatusMessageHelper'
+import { authMiddleware } from '#bot/middlewares/AuthMiddleware'
+import { userSaverMiddleware } from '#bot/middlewares/UserSaverMiddleware'
 
 // Handlers
-import { SystemHandlers } from '../bot/handlers/SystemHandlers.js'
-import { VacancyHandlers } from '../bot/handlers/VacancyHandlers.js'
-import { ApplicationHandlers } from '../bot/handlers/ApplicationHandlers.js'
+import { SystemHandlers } from '#bot/handlers/SystemHandlers'
+import { VacancyHandlers } from '#bot/handlers/VacancyHandlers'
+import { ApplicationHandlers } from '#bot/handlers/ApplicationHandlers'
 
 const logger = makeLogger('telegram-service')
 

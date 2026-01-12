@@ -2,7 +2,7 @@ import { ErrorHandler } from '@vk-public/errors'
 import { logger as rootLogger, makeLogger } from '@vk-public/logger'
 import { bootstrapService } from '@vk-public/utils/bootstrap'
 
-import { startApiServer } from './api/server.js'
+import { startApiServer } from '#api/server'
 
 import { config } from '#config'
 import { connectToMongo, disconnectFromMongo, VacancyModel } from '#db/index'

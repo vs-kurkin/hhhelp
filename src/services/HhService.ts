@@ -2,16 +2,16 @@
 import { makeLogger } from '@vk-public/logger'
 import axios from 'axios'
 
-import { MetricsService } from './monitor/MetricsService.js'
-import { HhResponseSchema, HhVacancy } from './schemas/HhSchemas.js'
-import { HhApiError, HhValidationError } from '../errors/index.js'
+import { MetricsService } from '#services/monitor/MetricsService'
+import { HhResponseSchema, HhVacancy } from '#services/schemas/HhSchemas'
+import { HhApiError, HhValidationError } from '#errors/index'
 
 import { config } from '#config'
 
 const logger = makeLogger('hh-service')
 
 // Re-export for external consumers
-export { HhVacancy }
+export type { HhVacancy }
 
 export class HhService {
     private readonly BASE_URL = 'https://api.hh.ru/vacancies'

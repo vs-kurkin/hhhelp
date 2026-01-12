@@ -1,7 +1,7 @@
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai'
 import { makeLogger } from '@vk-public/logger'
 
-import { GeminiPrompts } from './prompts/GeminiPrompts.js'
+import { GeminiPrompts } from '#services/prompts/GeminiPrompts'
 
 import { config } from '#config'
 

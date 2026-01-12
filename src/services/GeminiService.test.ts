@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { GeminiService } from '../GeminiService.js'
+import { GeminiService } from '#services/GeminiService'
 
 vi.mock('@vk-public/logger', () => ({
     makeLogger: () => ({
@@ -21,11 +21,15 @@ const mockGetGenerativeModel = vi.fn(() => ({
     generateContent: mockGenerateContent,
 }))
 
-vi.mock('@google/generative-ai', () => ({
-    GoogleGenerativeAI: vi.fn(() => ({
-        getGenerativeModel: mockGetGenerativeModel,
-    })),
-}))
+vi.mock('@google/generative-ai', () => {
+    return {
+        GoogleGenerativeAI: vi.fn().mockImplementation(function () {
+            return {
+                getGenerativeModel: mockGetGenerativeModel,
+            }
+        }),
+    }
+})
 
 describe('GeminiService', () => {
     let service: GeminiService

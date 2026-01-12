@@ -16,7 +16,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b",
-    "build:clean": "rimraf dist tsconfig.tsbuildinfo",
+    "build:clean": "rimraf dist",
     "build:package": "docker ",
     "deps:update": "npm update",
     "dev": "tsx watch --conditions=development --clear-screen=false src/index.ts",

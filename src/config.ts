@@ -33,6 +33,7 @@ export const config = cleanEnv(process.env, {
     HH_REDIRECT_URI: str({ default: '' }),
     HH_CONTACT_EMAIL: str({ devDefault: 'admin@example.com' }),
     HH_API_TIMEOUT: num({ default: 10000 }),
+    HH_SMART_FILTERS: str({ default: '{}' }),
     VAULT_ADDR: str({ default: '' }),
     VAULT_TOKEN: str({ default: '' }),
 })

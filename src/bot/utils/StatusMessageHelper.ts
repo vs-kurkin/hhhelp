@@ -90,9 +90,7 @@ export class StatusMessageHelper {
     }
 
     private countByStack(): Record<string, number> {
-        const counts: Record<string, number> = {
-            Frontend: 0, Backend: 0, Fullstack: 0, 'Lead/Senior': 0, DevOps: 0, Other: 0,
-        }
+        const counts: Record<string, number> = {}
 
         for (const v of this.state.getVacancies()) {
             const stack = this.classifier.classify(v)

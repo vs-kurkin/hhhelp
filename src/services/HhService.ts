@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 import axios from 'axios'
 
 import { MetricsService } from './monitor/MetricsService.js'

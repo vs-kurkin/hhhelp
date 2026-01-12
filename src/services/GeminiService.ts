@@ -1,5 +1,5 @@
 import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai'
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 
 import { config } from '#config'
 

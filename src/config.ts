@@ -1,6 +1,6 @@
 import path from 'node:path'
 
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 import dotenv from 'dotenv'
 import { cleanEnv, num, str } from 'envalid'
 

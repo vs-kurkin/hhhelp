@@ -1,4 +1,4 @@
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 import mongoose from 'mongoose'
 
 import { config } from '#config'

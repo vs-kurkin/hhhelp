@@ -1,6 +1,6 @@
-import { ErrorHandler } from '@vk/errors'
-import { logger as rootLogger, makeLogger } from '@vk/logger'
-import { bootstrapService } from '@vk/utils/bootstrap'
+import { ErrorHandler } from '@vk-public/errors'
+import { logger as rootLogger, makeLogger } from '@vk-public/logger'
+import { bootstrapService } from '@vk-public/utils/bootstrap'
 
 import { startApiServer } from './api/server.js'
 

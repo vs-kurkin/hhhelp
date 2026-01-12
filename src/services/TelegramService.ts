@@ -1,4 +1,4 @@
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 import { Bot, MemorySessionStorage, session } from 'grammy'
 
 import { LogBufferTransport } from './monitor/LogBufferTransport.js'

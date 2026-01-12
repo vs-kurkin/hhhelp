@@ -5,7 +5,7 @@ import { VacancyClassifier } from '#services/VacancyClassifier'
 import { AnalysisService } from '#services/AnalysisService'
 import { TelegramTemplates } from '#templates/TelegramTemplates'
 import { InlineKeyboard } from 'grammy'
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 import { HhVacancy } from '#services/HhService'
 import { config } from '#config'
 

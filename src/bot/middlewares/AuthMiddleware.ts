@@ -1,6 +1,6 @@
 import { config } from '#config'
 import { UserModel } from '#db'
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 import { MyContext } from '../types.js'
 import { NextFunction } from 'grammy'
 

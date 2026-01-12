@@ -1,6 +1,6 @@
 import { createHmac } from 'node:crypto'
 
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 import { NextFunction, Request, Response } from 'express'
 
 import { config } from '#config'

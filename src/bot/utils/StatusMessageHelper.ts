@@ -3,7 +3,7 @@ import { config } from '#config'
 import { TelegramTemplates } from '#templates/TelegramTemplates'
 import { StateManager } from '../StateManager.js'
 import { VacancyClassifier } from '#services/VacancyClassifier'
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 
 const logger = makeLogger('status-helper')
 

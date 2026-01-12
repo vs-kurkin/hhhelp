@@ -5,7 +5,7 @@ import { TelegramTemplates } from '#templates/TelegramTemplates'
 import { BotErrorHandler } from '../utils/ErrorHandler.js'
 import { UserModel } from '#db'
 import { InlineKeyboard } from 'grammy'
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 
 const logger = makeLogger('application-handlers')
 

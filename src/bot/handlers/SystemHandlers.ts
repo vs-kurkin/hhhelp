@@ -4,7 +4,7 @@ import { LogBufferTransport } from '#services/monitor/LogBufferTransport'
 import { TelegramTemplates } from '#templates/TelegramTemplates'
 import { config } from '#config'
 import { InlineKeyboard } from 'grammy'
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 
 const logger = makeLogger('system-handlers')
 

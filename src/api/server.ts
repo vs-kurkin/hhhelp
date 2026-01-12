@@ -2,8 +2,8 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { createHttpHealthCheck } from '@vk/health'
-import { makeLogger } from '@vk/logger'
+import { createHttpHealthCheck } from '@vk-public/health'
+import { makeLogger } from '@vk-public/logger'
 import cors from 'cors'
 import express, { type Express } from 'express'
 import rateLimit from 'express-rate-limit'

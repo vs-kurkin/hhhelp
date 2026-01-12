@@ -1,4 +1,4 @@
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 import Redis from 'ioredis'
 
 import { config } from '#config'

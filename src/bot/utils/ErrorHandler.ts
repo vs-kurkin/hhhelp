@@ -1,6 +1,6 @@
 import { MyContext } from '../types.js'
 import { config } from '#config'
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 
 const logger = makeLogger('bot-error-handler')
 

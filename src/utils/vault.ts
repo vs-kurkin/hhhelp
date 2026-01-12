@@ -1,5 +1,5 @@
 /* eslint-disable max-statements */
-import { makeLogger } from '@vk/logger'
+import { makeLogger } from '@vk-public/logger'
 import vault from 'node-vault'
 import { config } from '#config'
 

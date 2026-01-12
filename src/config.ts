@@ -31,7 +31,7 @@ export const config = cleanEnv(process.env, {
     HH_CLIENT_ID: str({ default: '' }),
     HH_CLIENT_SECRET: str({ default: '' }),
     HH_REDIRECT_URI: str({ default: '' }),
-    HH_CONTACT_EMAIL: str({ default: 'admin@b-vladi.ru' }),
+    HH_CONTACT_EMAIL: str({ devDefault: 'admin@example.com' }),
     HH_API_TIMEOUT: num({ default: 10000 }),
     VAULT_ADDR: str({ default: '' }),
     VAULT_TOKEN: str({ default: '' }),

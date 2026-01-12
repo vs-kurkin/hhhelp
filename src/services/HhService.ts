@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import { MetricsService } from './monitor/MetricsService.js'
 import { HhResponseSchema, HhVacancy } from './schemas/HhSchemas.js'
+import { HhApiError, HhValidationError } from '../errors/index.js'
 
 import { config } from '#config'
 
@@ -32,7 +33,7 @@ export class HhService {
 
             return vacancies
         } catch (error) {
-            const message = error instanceof Error && error.message === 'Validation Error'
+            const message = error instanceof HhValidationError
                 ? 'HH API schema validation failed'
                 : 'Failed to fetch vacancies'
 
@@ -43,28 +44,35 @@ export class HhService {
     }
 
     private async fetchRawData(): Promise<unknown> {
-        const response = await axios.get(this.BASE_URL, {
-            params: {
-                text: config.HH_SEARCH_TEXT,
-                salary: config.HH_MIN_SALARY,
-                currency_code: 'RUR',
-                area: config.HH_AREA,
-                order_by: 'publication_time',
-                per_page: 100,
-            },
-            headers: { 'User-Agent': this.USER_AGENT },
-            timeout: config.HH_API_TIMEOUT,
-        })
+        try {
+            const response = await axios.get(this.BASE_URL, {
+                params: {
+                    text: config.HH_SEARCH_TEXT,
+                    salary: config.HH_MIN_SALARY,
+                    currency_code: 'RUR',
+                    area: config.HH_AREA,
+                    order_by: 'publication_time',
+                    per_page: 100,
+                },
+                headers: { 'User-Agent': this.USER_AGENT },
+                timeout: config.HH_API_TIMEOUT,
+            })
 
-        return response.data
+            return response.data
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                throw new HhApiError('Network or API error', error.toJSON())
+            }
+            throw error
+        }
     }
 
     private validateAndExtractItems(data: unknown): HhVacancy[] {
         const parsed = HhResponseSchema.safeParse(data)
 
         if (!parsed.success) {
-            // Throw error without recording it here to avoid double-reporting in metrics/logs
-            throw new Error('Validation Error', { cause: parsed.error.format() })
+            // Throw explicit validation error
+            throw new HhValidationError('Validation Error', parsed.error.format())
         }
 
         return parsed.data.items

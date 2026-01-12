@@ -410,7 +410,7 @@ export function createApiApp(metricsService?: MetricsService, telegramService?: 
     })
 
     // Serve Frontend
-    // Assuming structure: services/hh-vacancy-monitor/src/api/server.ts -> ../../../view/dist
+    // Assuming structure: services/hhhelp/src/api/server.ts -> ../../../view/dist
     const viewPath = path.resolve(__dirname, '../../../view/dist')
 
     app.use(express.static(viewPath))

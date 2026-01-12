@@ -14,7 +14,7 @@ export { HhVacancy }
 
 export class HhService {
     private readonly BASE_URL = 'https://api.hh.ru/vacancies'
-    private readonly USER_AGENT = 'HH-Vacancy-Monitor/1.0 (admin@b-vladi.ru)'
+    private readonly USER_AGENT = 'HHHelp/1.0 (admin@b-vladi.ru)'
 
     constructor(private readonly metrics?: MetricsService) {}
 

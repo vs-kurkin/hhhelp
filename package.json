@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "HeadHunter Helper Bot",
   "author": "vs-kurkin",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vs-kurkin/hhhelp.git"

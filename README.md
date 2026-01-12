@@ -98,4 +98,5 @@ src/
 5.  Open a Pull Request.
 
 ## 📄 License
-ISC
+
+MIT

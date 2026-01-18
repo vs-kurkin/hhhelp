@@ -61,6 +61,11 @@ export class HhService {
             return response.data
         } catch (error) {
             if (axios.isAxiosError(error)) {
+                logger.error('HH API Error Response', {
+                    status: error.response?.status,
+                    data: error.response?.data,
+                    headers: error.response?.headers
+                })
                 throw new HhApiError('Network or API error', error.toJSON())
             }
             throw error

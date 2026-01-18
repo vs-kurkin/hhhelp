@@ -1,7 +1,6 @@
 /* eslint-disable max-statements */
 import { makeLogger } from '@vk-public/logger'
 import vault from 'node-vault'
-import { config } from '#config'
 
 const logger = makeLogger('vault-loader')
 
@@ -10,22 +9,16 @@ export async function loadSecrets(): Promise<void> {
     const vaultToken = process.env.VAULT_TOKEN
 
     if (!vaultAddr || !vaultToken) {
-        logger.warn('VAULT_ADDR or VAULT_TOKEN not set. Skipping Vault loading.')
+        logger.debug('VAULT_ADDR or VAULT_TOKEN not set. Skipping Vault loading.')
 
         return
     }
 
     try {
-        if (!config.VAULT_ADDR || !config.VAULT_TOKEN) {
-            logger.warn('VAULT_ADDR or VAULT_TOKEN not set. Skipping Vault loading.')
-
-            return
-        }
-
         const client = vault({
             apiVersion: 'v1',
-            endpoint: config.VAULT_ADDR,
-            token: config.VAULT_TOKEN,
+            endpoint: vaultAddr,
+            token: vaultToken,
         })
 
         const secretPath = 'secret/data/services/hhhelp'

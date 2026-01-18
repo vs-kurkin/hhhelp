@@ -4,3 +4,8 @@ dist
 .idea
 *.iml
 *.tsbuildinfo
+.env.development
+
+public/
+
+*.log

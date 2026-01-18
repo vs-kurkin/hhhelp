@@ -1,0 +1,39 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "module": "NodeNext",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": "src",
+    "composite": true,
+    "declarationDir": "./dist/types",
+    "sourceMap": true,
+    "moduleResolution": "nodenext",
+    "target": "ESNext",
+    "lib": [
+      "ESNext",
+      "ES6"
+    ],
+    "paths": {
+      "#/*": [
+        "*"
+      ],
+      "#*": [
+        "*.ts"
+      ]
+    }
+  },
+  "include": [
+    "vite.config.ts",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "./shims-vue.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "dependencies": {
+    "@vk-public/config": "^1.0.3",
+    "@vk-public/logger": "^1.0.3",
+    "@vk-public/utils": "^1.0.3",
+    "axios": "^1.13.2",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.26"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "@vk-public/types": "^1.0.3",
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0",
+    "vue-tsc": "^3.2.1"
+  },
+  "imports": {
+    "#/*": "./dist/*.js",
+    "#*": {
+      "types": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/types/index.d.ts",
+  "name": "@vk-public/view",
+  "private": true,
+  "scripts": {
+    "build": "vite build",
+    "build:clean": "rimraf dist",
+    "dev": "vite dev",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "type": "module",
+  "version": "1.0.0",
+  "files": [
+    "dist"
+  ]
+}

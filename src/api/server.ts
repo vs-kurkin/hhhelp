@@ -24,13 +24,6 @@ const logger = makeLogger('api-server')
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const getTelegramUserId = (req: express.Request): number | undefined => {
-    // Debug logging
-    console.log('Auth Check:', { 
-        nodeEnv: process.env.NODE_ENV, 
-        debugHeader: req.headers['x-debug-user-id'],
-        headers: req.headers
-    })
-
     if (process.env.NODE_ENV === 'development' && req.headers['x-debug-user-id']) {
         return Number(req.headers['x-debug-user-id'])
     }
@@ -410,8 +403,7 @@ export function createApiApp(metricsService?: MetricsService, telegramService?: 
     })
 
     // Serve Frontend
-    // Assuming structure: services/hhhelp/src/api/server.ts -> ../../../view/dist
-    const viewPath = path.resolve(__dirname, '../../../view/dist')
+    const viewPath = path.resolve(process.cwd(), 'public')
 
     app.use(express.static(viewPath))
 

@@ -51,7 +51,7 @@ export const useVacancyStore = defineStore('vacancy', () => {
     // Hidden vacancies are now handled by server filtering, but we keep a local set for session-based UI
     const hiddenIds = ref(new Set<string>())
 
-    const API_URL = '/api/vacancies'
+    const API_URL = 'api/vacancies'
 
     const getHeaders = () => {
         // @ts-expect-error - Telegram WebApp types
@@ -93,10 +93,11 @@ export const useVacancyStore = defineStore('vacancy', () => {
 
             // Server already excludes hidden vacancies. 
             // We just populate the list.
-            vacancies.value = response.data.data
-            meta.value = response.data.meta
+            vacancies.value = response.data.data || []
+            meta.value = response.data.meta || { total: 0, page: 1, limit: 12, pages: 1 }
         } catch (error) {
             logger.error('Failed to fetch vacancies', { error })
+            vacancies.value = []
         } finally {
             loading.value = false
         }
@@ -132,7 +133,7 @@ export const useVacancyStore = defineStore('vacancy', () => {
     }
 
     const toggleFavorite = async (vacancy: Vacancy) => {
-        const url = `/api/favorites/${ vacancy.hhId }`
+        const url = `api/favorites/${ vacancy.hhId }`
 
         // Optimistic update
         const oldValue = vacancy.isFavorite

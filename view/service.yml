@@ -9,13 +9,12 @@ ports:
   - "3005:3005"
 labels:
   - "traefik.enable=true"
-  - "traefik.http.routers.view-live.rule=Host(`app.localhost`) || Host(`192.168.0.109`)"
-  - "traefik.http.routers.view-live.entrypoints=web,websecure"
-  - "traefik.http.routers.view-live.tls=true"
-  - "traefik.http.routers.view-live.service=view-blue"
-  - "traefik.http.routers.view-blue.rule=Host(`blue.app.localhost`)"
-  - "traefik.http.routers.view-blue.entrypoints=web"
-  - "traefik.http.services.view-blue.loadbalancer.server.port=3005"
+  - "traefik.http.routers.hhhelp-view.rule=Host(`192.168.0.109`) && PathPrefix(`/hhhelp`)"
+  - "traefik.http.routers.hhhelp-view.entrypoints=web,websecure"
+  - "traefik.http.routers.hhhelp-view.tls=true"
+  - "traefik.http.middlewares.hhhelp-stripprefix.stripprefix.prefixes=/hhhelp"
+  - "traefik.http.routers.hhhelp-view.middlewares=hhhelp-stripprefix"
+  - "traefik.http.services.hhhelp-view.loadbalancer.server.port=3005"
 healthcheck:
   test: [ "CMD", "curl", "-f", "http://localhost:3005/" ]
   interval: 30s

@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from 'mongoose'
+import mongoose, {Document, Schema} from 'mongoose'
 
 export interface User extends Document {
     telegramId: number;
@@ -50,9 +50,9 @@ const UserSchema = new Schema<User>({
         hhUserId: String,
         email: String,
     },
-    hhResumes: [ Schema.Types.Mixed ],
-    favorites: { type: [ String ], default: [] },
-    hiddenVacancies: { type: [ String ], default: [] },
-}, { timestamps: true })
+    hhResumes: [Schema.Types.Mixed],
+    favorites: {type: [String], default: []},
+    hiddenVacancies: {type: [String], default: []},
+}, {timestamps: true})
 
 export const UserModel = mongoose.model<User>('User', UserSchema)

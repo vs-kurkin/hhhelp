@@ -5,10 +5,11 @@ import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(({ mode }) => {
     const environment = loadEnv(mode, process.cwd(), '')
-    const port = Number(environment.SERVICE_PORT)
+    const port = Number(environment.SERVICE_PORT || process.env.SERVICE_PORT || 3000)
 
     return ({
         mode,
+        base: '/hhhelp/',
         define: {
             'import.meta.env.ENV_VARIABLE': JSON.stringify(environment.ENV_VARIABLE),
             'process.env': {},

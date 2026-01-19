@@ -1,18 +1,75 @@
 services:
   mongo:
     image: mongo:latest
+    container_name: hhhelp-mongo
     ports:
       - "27018:27017"
     networks:
-      - hhhelp-net
+      - deployment_backend
 
   redis:
     image: redis:latest
+    container_name: hhhelp-redis
     ports:
       - "6380:6379"
     networks:
-      - hhhelp-net
+      - deployment_backend
+
+  hhhelp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hhhelp-backend
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://hhhelp-mongo:27017/hhhelp
+      - REDIS_URI=redis://hhhelp-redis:6379
+      - TELEGRAM_BOT_TOKEN_HH=8582858047:AAEswbScjNvB-YP1AcWCx-iuhvOpKXnE83Q
+      - TELEGRAM_CHAT_ID_HH=1258879863
+      - GEMINI_API_KEY=AIzaSyBd4XM_adi-g2w-WHvN6hc0LPuGQN9HlZY
+      - HH_CONTACT_EMAIL=job@b-vladi.ru
+      - SERVICE_PUBLIC_URL=https://192.168.0.109/hhhelp
+    networks:
+      - deployment_backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hhhelp-api.rule=Host(`192.168.0.109`) && PathPrefix(`/hhhelp/api`)"
+      - "traefik.http.routers.hhhelp-api.priority=2000"
+      - "traefik.http.routers.hhhelp-api.entrypoints=web,websecure"
+      - "traefik.http.routers.hhhelp-api.tls=true"
+      - "traefik.http.middlewares.hhhelp-api-strip.stripprefix.prefixes=/hhhelp"
+      - "traefik.http.routers.hhhelp-api.middlewares=hhhelp-api-strip"
+      - "traefik.http.services.hhhelp-api.loadbalancer.server.port=9000"
+    depends_on:
+      - mongo
+      - redis
+
+  view:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    container_name: hhhelp-view
+    command: pnpm --filter=@vk-public/view dev --host
+    environment:
+      - SERVICE_PORT=3000
+      - VITE_API_URL=http://hhhelp-backend:9000
+      - NODE_OPTIONS=--max-old-space-size=1024
+    networks:
+      - deployment_backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hhhelp-view.rule=Host(`192.168.0.109`) && PathPrefix(`/hhhelp`)"
+      - "traefik.http.routers.hhhelp-view.priority=1000"
+      - "traefik.http.routers.hhhelp-view.entrypoints=web,websecure"
+      - "traefik.http.routers.hhhelp-view.tls=true"
+      - "traefik.http.middlewares.hhhelp-view-slash.redirectregex.regex=^https?://([^/]+)/hhhelp$$"
+      - "traefik.http.middlewares.hhhelp-view-slash.redirectregex.replacement=https://$$1/hhhelp/"
+      - "traefik.http.routers.hhhelp-view.middlewares=hhhelp-view-slash"
+      - "traefik.http.services.hhhelp-view.loadbalancer.server.port=3000"
+    depends_on:
+      - hhhelp
 
 networks:
-  hhhelp-net:
-    driver: bridge
+  deployment_backend:
+    external: true

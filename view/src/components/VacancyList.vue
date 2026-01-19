@@ -51,11 +51,11 @@
 
     <!-- List -->
     <div v-else class="p-4 space-y-3">
-      <div v-if="store.vacancies.length === 0" class="text-center text-[var(--tg-theme-hint-color)] py-10">
+      <div v-if="!store.vacancies || store.vacancies.length === 0" class="text-center text-[var(--tg-theme-hint-color)] py-10">
         No vacancies found.
       </div>
 
-      <div v-for="vacancy in store.vacancies" :key="vacancy.hhId"
+      <div v-for="vacancy in (store.vacancies || [])" :key="vacancy.hhId"
            class="bg-[var(--tg-theme-bg-color)] p-4 rounded-xl border border-[var(--tg-theme-hint-color)]/20 shadow-sm transition-all"
            :class="{ 
              'ring-1 ring-[var(--tg-theme-button-color)]/50': expandedVacancies.has(vacancy.hhId),
@@ -67,7 +67,13 @@
             <div class="flex justify-between items-start">
                 <div class="flex-grow pr-2">
                     <h3 class="font-semibold text-[var(--tg-theme-text-color)] leading-tight mb-1 break-words">{{ vacancy.name }}</h3>
-                    <p class="text-sm text-[var(--tg-theme-hint-color)] mb-1">{{ vacancy.employer }}</p>
+                    <div class="flex items-center gap-2 text-sm text-[var(--tg-theme-hint-color)] mb-1">
+                        <span>{{ vacancy.employer }}</span>
+                        <span v-if="vacancy.raw?.area?.name" class="flex items-center gap-1">
+                            <span class="opacity-30">•</span>
+                            {{ vacancy.raw.area.name }}
+                        </span>
+                    </div>
                 </div>
                 
                 <button @click.stop="store.toggleFavorite(vacancy)" class="mr-2 p-2 rounded-full hover:bg-[var(--tg-theme-secondary-bg-color)] transition-colors z-10 relative group">
@@ -96,7 +102,7 @@
                 </p>
                 <p v-else class="text-[var(--tg-theme-hint-color)] text-sm">Salary not specified</p>
                 
-                <span v-if="vacancy.stack" class="text-xs font-medium px-2 py-0.5 rounded bg-[var(--tg-theme-secondary-bg-color)] text-[var(--tg-theme-hint-color)]">
+                <span v-if="vacancy.stack" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--tg-theme-button-color)]/10 text-[var(--tg-theme-button-color)] uppercase tracking-wider">
                     {{ vacancy.stack }}
                 </span>
             </div>
@@ -153,7 +159,7 @@
     </div>
 
     <!-- Pagination -->
-    <div v-if="store.vacancies.length > 0" class="flex justify-between items-center px-4 mt-2 mb-6 text-sm text-[var(--tg-theme-hint-color)]">
+    <div v-if="store.vacancies?.length > 0" class="flex justify-between items-center px-4 mt-2 mb-6 text-sm text-[var(--tg-theme-hint-color)]">
       <button
           :disabled="store.meta.page === 1"
           class="px-4 py-2 rounded-lg bg-[var(--tg-theme-secondary-bg-color)] disabled:opacity-50 text-[var(--tg-theme-text-color)]"

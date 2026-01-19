@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('auth', () => {
                 return
             }
 
-            const response = await axios.get('/api/user/me', {
+            const response = await axios.get('api/user/me', {
                  headers: { 
                      // eslint-disable-next-line @typescript-eslint/naming-convention
                      'x-telegram-init-data': initData 
@@ -47,7 +47,7 @@ export const useAuthStore = defineStore('auth', () => {
         const parameters = new URLSearchParams(initData)
         const userJson = parameters.get('user')
         
-        const authUrl = `${window.location.origin}/api/auth/hh/login?userId=${userJson ? JSON.parse(userJson).id : ''}`
+        const authUrl = new URL('api/auth/hh/login', window.location.href).href + `?userId=${userJson ? JSON.parse(userJson).id : ''}`
 
         if (userJson) {
             // @ts-expect-error - Telegram WebApp types

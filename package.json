@@ -31,7 +31,7 @@
     "docker:down": "docker-compose -f docker-compose.dev.yml down",
     "docker:logs": "docker-compose -f docker-compose.dev.yml logs -f",
     "docker:restart": "npm run docker:down && npm run docker:up",
-    "docker:backend:logs": "docker logs -f hhhelp-backend",
+    "docker:backend:logs": "docker logs -f hhhelp-telegram",
     "docker:view:rebuild": "docker-compose -f docker-compose.dev.yml up -d --build view"
   },
   "dependencies": {

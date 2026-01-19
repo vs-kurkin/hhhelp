@@ -15,11 +15,11 @@ services:
     networks:
       - deployment_backend
 
-  hhhelp:
+  telegram:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: hhhelp-backend
+    container_name: hhhelp-telegram
     environment:
       - NODE_ENV=development
       - MONGO_URI=mongodb://hhhelp-mongo:27017/hhhelp
@@ -53,7 +53,7 @@ services:
     command: pnpm --filter=@vk-public/view dev --host
     environment:
       - SERVICE_PORT=3000
-      - VITE_API_URL=http://hhhelp-backend:9000
+      - VITE_API_URL=http://hhhelp-telegram:9000
       - NODE_OPTIONS=--max-old-space-size=1024
     networks:
       - deployment_backend
@@ -68,7 +68,7 @@ services:
       - "traefik.http.routers.hhhelp-view.middlewares=hhhelp-view-slash"
       - "traefik.http.services.hhhelp-view.loadbalancer.server.port=3000"
     depends_on:
-      - hhhelp
+      - telegram
 
 networks:
   deployment_backend:

@@ -3,7 +3,7 @@
     "@vk-public/config": "^1.0.3",
     "@vk-public/logger": "^1.0.3",
     "@vk-public/utils": "^1.0.3",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "pinia": "^3.0.4",
     "vue": "^3.5.26"
   },

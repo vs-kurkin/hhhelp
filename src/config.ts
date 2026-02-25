@@ -30,7 +30,7 @@ export const config = cleanEnv(process.env, {
     MONGO_URI: str({ default: 'mongodb://192.168.0.109:27018/netagent' }),
     REDIS_URI: str({ default: 'redis://192.168.0.109:6380' }),
     GEMINI_API_KEY: str({ default: '' }),
-    GEMINI_MODEL_NAME: str({ default: 'gemini-1.5-flash' }),
+    GEMINI_MODEL: str({ default: 'gemini-3-flash-preview' }),
     SERVICE_PUBLIC_URL: str({ default: 'https://127.0.0.1:9000' }),
     HH_CLIENT_ID: str({ default: '' }),
     HH_CLIENT_SECRET: str({ default: '' }),

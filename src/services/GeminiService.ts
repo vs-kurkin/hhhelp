@@ -71,8 +71,13 @@ export class GeminiService {
             throw new Error('Gemini API not initialized')
         }
 
+        let modelName = config.GEMINI_MODEL
+        // Map common aliases to full model names (2026 Latest)
+        if (modelName === 'pro') modelName = 'gemini-3.1-pro-preview'
+        if (modelName === 'flash') modelName = 'gemini-3-flash-preview'
+
         return this.genAI.getGenerativeModel({
-            model: config.GEMINI_MODEL_NAME,
+            model: modelName,
             systemInstruction,
             generationConfig: {
                 temperature: 0.7,

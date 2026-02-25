@@ -11,7 +11,7 @@ vi.mock('@vk-public/logger', () => ({
 vi.mock('#config', () => ({
     config: {
         GEMINI_API_KEY: 'mock-api-key',
-        GEMINI_MODEL_NAME: 'gemini-1.5-flash',
+        GEMINI_MODEL: 'gemini-3-flash-preview',
     },
 }))
 
